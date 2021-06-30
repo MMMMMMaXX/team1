@@ -156,6 +156,15 @@ export default {
       this.orderId = id;
       this.dialogVisible = true;
     },
+    //取消派单
+    async cancelOrder(id) {
+      let data = {
+        orderId: id,
+      };
+      //通过对应的参数发送网络请求
+      let res = await get("/order/cancelSendOrder", { ...data });
+      this.getAllOrderData();
+    },
     //选择分页的大小后
     handleSizeChange(val) {
       this.pageSize = val;
