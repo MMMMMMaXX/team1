@@ -60,8 +60,8 @@ export function toThousandFilter(num) {
   return (+num || 0).toString().replace(/^-?\d+/g, m => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
 }
 
-export function fmtDate(date){
-  return date?moment(date).format('YYYY-MM-DD'):'';
+export function fmtDate(date) {
+  return date ? moment(date).format('YYYY-MM-DD HH:mm:ss') : ''
 }
 
 /**
