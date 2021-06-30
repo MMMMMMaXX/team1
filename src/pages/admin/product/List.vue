@@ -369,6 +369,9 @@ export default {
 };
 </script>
 <style scoped>
+.table_content {
+  height: 790px;
+}
 /* 分页区域的样式 */
 .paginetion {
   position: fixed;

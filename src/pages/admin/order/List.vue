@@ -59,7 +59,7 @@
           <template slot-scope="scope">
             <el-button
               round
-              @click="moreOrderMsg(scope.row)"
+              @click="moreOrderMsg(scope.row.id)"
               style="color: #606266"
               size="mini"
               >详情</el-button
@@ -103,6 +103,7 @@
         v-model="waiterId"
         :label="item.id"
         :key="index"
+        class="radio"
       >
         {{ item.username }} {{ item.realname }}
       </el-radio>
@@ -120,7 +121,6 @@ let moment = require("moment");
 export default {
   data() {
     return {
-//测试
       moment,
       orderArr: [],
       activeName: "first",
@@ -140,6 +140,15 @@ export default {
   },
   computed: {},
   methods: {
+    //点击详情
+    moreOrderMsg(id) {
+      this.$router.push({
+        path: "Details",
+        query: {
+          id: id,
+        },
+      });
+    },
     //提交派单 通过get方式请求接口 实现派单
     async submitOrder() {
       let data = {
@@ -163,7 +172,7 @@ export default {
         orderId: id,
       };
       //通过对应的参数发送网络请求
-      let res = await get("/order/cancelSendOrder", { ...data });
+      let res = await get("/order/cancelSendOrder", data);
       this.getAllOrderData();
     },
     //选择分页的大小后
@@ -212,7 +221,6 @@ export default {
       //通过对应的参数发送网络请求
       let res = await get("/baseUser/pageQuery", { ...data });
       this.employeeArr = res.data.list;
-      console.log(this.employeeArr);
     },
   },
   created() {
@@ -223,9 +231,19 @@ export default {
 };
 </script>
 <style scoped>
+.table_content {
+  height: 790px;
+}
 .paginetion {
   position: fixed;
   bottom: 30px;
   right: 30px;
+}
+.radio {
+  padding: 10px 20px 0 10px;
+  height: 36px;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  border-radius: 30px;
 }
 </style>
