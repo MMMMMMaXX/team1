@@ -22,10 +22,32 @@ import Briupdrawer from '@/components/Briupdrawer'
 import BriupMap from '@/components/BriupMap'
 import PhoneChart from '@/components/PhoneChart'
 
+// 引入暴露的防抖节流函数
+import { inputDebounceThrot, buttonThrot } from './utils/mx'
+// 自定义指令v-inputDebounceThrot input搜索框输入搜索时防抖+回车键节流
+// 参数：  func    事件回调函数
+//         wait    输入事件防抖时间，默认为1000ms
+//         enterWait   回车事件节流时间,默认为1000ms
+Vue.directive('searchDebounceAndThrotFromMx', {
+  bind(el, binding) {
+    const inputFunc = inputDebounceThrot(binding.value, 500, 1000)
+    el.addEventListener('keyup', inputFunc)
+  }
+})
+// 自定义指令v-buttonThrotFromMx  搜索按钮节流
+// 参数：  func    事件回调函数
+//         wait    点击事件节流时间，默认为1000ms
+Vue.directive('buttonThrotFromMx', {
+  bind(el, binding) {
+    const btnFunc = buttonThrot(binding.value, 1000)
+    el.addEventListener('click', btnFunc)
+  }
+})
+
 // 自定义组件
-Vue.component('Briupdrawer',Briupdrawer)
-Vue.component('BriupMap',BriupMap)
-Vue.component('PhoneChart',PhoneChart)
+Vue.component('Briupdrawer', Briupdrawer)
+Vue.component('BriupMap', BriupMap)
+Vue.component('PhoneChart', PhoneChart)
 
 import Vant from 'vant'
 import 'vant/lib/index.css'
