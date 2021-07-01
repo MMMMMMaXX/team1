@@ -6,14 +6,8 @@
     <div class="header">
       <template>
         <div class="demo-type">
-          <el-avatar
-            :size="80"
-            :src="this.userDetail.userFace"
-            @error="errorHandler"
-          >
-            <img
-              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
-            >
+          <el-avatar :size="80" :src="this.userDetail.userFace" @error="errorHandler">
+            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png">
           </el-avatar>
         </div>
       </template>
@@ -59,9 +53,7 @@
       <!-- 用户生日： -->
       <div class="foot_1">
         <span>用户生日：</span>
-        <p v-if="this.userDetail.birth != null">
-          {{ this.userDetail.birth | fmtDate1 }}
-        </p>
+        <p v-if="this.userDetail.birth != null">{{ this.userDetail.birth | fmtDate1 }}</p>
         <p v-else>暂无</p>
       </div>
       <!-- 注册时间 -->
@@ -78,34 +70,19 @@
       <!-- 注册状态 -->
       <div class="foot_1">
         <span>注册状态:</span>
-        <el-tag
-          v-if="this.userDetail.status == '正常'"
-          type="success"
-        >正常</el-tag>
-        <el-tag
-          v-else-if="this.userDetail.status == '禁用'"
-          type="danger"
-        >禁用</el-tag>
+        <el-tag v-if="this.userDetail.status == '正常'" type="success">正常</el-tag>
+        <el-tag v-else-if="this.userDetail.status == '禁用'" type="danger">禁用</el-tag>
         <el-tag v-else type="info">暂无</el-tag>
       </div>
       <span class="span_1" @click="editUser">修改个人信息</span>
     </div>
     <!-- 模态框1 -->
-    <el-dialog
-      :title="dialogTitle"
-      :visible.sync="dialogVisible"
-      @close="dialogClose"
-    >
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" @close="dialogClose">
       <!-- 表单区域 -->
       <!-- model 表单对象， 最终我们要提交的那个表单对象 -->
       <!-- :rules 表单验证的规则 -->
       <!-- ref 类比与 id 最终通过ref 找到这张表单 -->
-      <el-form
-        ref="User_form"
-        :model="UserForm"
-        :rules="rules"
-        label-width="80px"
-      >
+      <el-form ref="User_form" :model="UserForm" :rules="rules" label-width="80px">
         <!-- 登录用户 -->
         <el-form-item label="登录用户" prop="username">
           <el-input v-model="UserForm.username" />
@@ -147,15 +124,11 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogClose">取 消</el-button>
         <!-- 提交表单后，调用重置表单的方法 -->
-        <el-button type="primary" @click="submitForm">确定修改</el-button>
+        <el-button v-buttonThrotFromMx="submitForm" type="primary">确定修改</el-button>
       </span>
     </el-dialog>
     <!-- 模态框2 -->
-    <el-dialog
-      :title="dialogTitle"
-      :visible.sync="dialogVisible2"
-      @close="dialogClose2"
-    >
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible2" @close="dialogClose2">
       <!-- 头像 -->
       <el-upload
         :action="uploadFileURL"
@@ -171,7 +144,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogClose">取 消</el-button>
         <!-- 提交表单后，调用重置表单的方法 -->
-        <el-button type="primary" @click="submitForm2">确定修改</el-button>
+        <el-button v-buttonThrotFromMx="submitForm2" type="primary">确定修改</el-button>
       </span>
     </el-dialog>
   </div>
@@ -309,7 +282,7 @@ export default {
     submitForm() {
       this.$refs['User_form'].validate(async(valid) => {
         if (valid) {
-          if (this.birth1 != this.UserForm.birth) {
+          if (this.birth1 !== this.UserForm.birth) {
             this.UserForm.birth = Date.parse(this.UserForm.birth)
           }
           // 发送表单验证请求  提交表单对象
