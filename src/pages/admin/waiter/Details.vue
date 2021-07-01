@@ -1,71 +1,38 @@
 <template>
   <div>
     <div>
-      <el-image
-        :src="waiterData.userFace"
-        style="width: 100px; height: 100px"
-      />
-      <el-button
-        type="text"
-        size="small"
-        @click="editUserface(waiterData.userFace)"
-      >修改头像</el-button>
+      <el-image :src="waiterData.userFace" style="width: 100px; height: 100px" />
+      <el-button type="text" size="small" @click="editUserface(waiterData.userFace)">修改头像</el-button>
     </div>
     <div>
-      <p v-if="waiterData.username">
-        登录用户 &nbsp;&nbsp; {{ waiterData.username }}
-      </p>
+      <p v-if="waiterData.username">登录用户 &nbsp;&nbsp; {{ waiterData.username }}</p>
       <p v-else>登录用户 &nbsp;&nbsp;暂无</p>
-      <p v-if="waiterData.realname">
-        用户姓名 &nbsp;&nbsp;{{ waiterData.realname }}
-      </p>
+      <p v-if="waiterData.realname">用户姓名 &nbsp;&nbsp;{{ waiterData.realname }}</p>
       <p v-else>用户姓名 &nbsp;&nbsp;暂无</p>
-      <p v-if="waiterData.telephone">
-        用户手机 &nbsp;&nbsp;{{ waiterData.telephone }}
-      </p>
+      <p v-if="waiterData.telephone">用户手机 &nbsp;&nbsp;{{ waiterData.telephone }}</p>
       <p v-else>用户手机 暂无</p>
       <p v-if="waiterData.gender">
-        <span
-          v-if="waiterData.gender == 'female' || waiterData.gender == '女'"
-        >用户性别 &nbsp;&nbsp; 女</span>
-        <span
-          v-if="waiterData.gender == 'male' || waiterData.gender == '男'"
-        >用户性别 &nbsp;&nbsp; 男</span>
+        <span v-if="waiterData.gender == 'female' || waiterData.gender == '女'">用户性别 &nbsp;&nbsp; 女</span>
+        <span v-if="waiterData.gender == 'male' || waiterData.gender == '男'">用户性别 &nbsp;&nbsp; 男</span>
       </p>
       <p v-else>用户性别 &nbsp;&nbsp;暂无</p>
 
-      <p v-if="waiterData.roles.name">
-        用户角色 &nbsp;&nbsp;{{ waiterData.roles.name }}
-      </p>
+      <p v-if="waiterData.roles.name">用户角色 &nbsp;&nbsp;{{ waiterData.roles.name }}</p>
       <p v-else>用户角色 &nbsp;&nbsp; 暂无</p>
-      <p v-if="waiterData.birth">
-        用户生日 &nbsp;&nbsp;{{ waiterData.birth | fmtDate1 }}
-      </p>
+      <p v-if="waiterData.birth">用户生日 &nbsp;&nbsp;{{ waiterData.birth | fmtDate1 }}</p>
       <p v-else>用户生日 &nbsp;&nbsp;暂无</p>
-      <p v-if="waiterData.registerTime">
-        注册时间 &nbsp;&nbsp;{{ waiterData.registerTime | fmtDate1 }}
-      </p>
+      <p v-if="waiterData.registerTime">注册时间 &nbsp;&nbsp;{{ waiterData.registerTime | fmtDate1 }}</p>
       <p v-else>注册时间 &nbsp;&nbsp;暂无</p>
       <p v-if="waiterData.email">邮箱 &nbsp;&nbsp;{{ waiterData.email }}</p>
       <p v-else>邮箱 &nbsp;&nbsp; 暂无</p>
-      <p v-if="waiterData.status">
-        用户状态 &nbsp;&nbsp;{{ waiterData.status }}
-      </p>
+      <p v-if="waiterData.status">用户状态 &nbsp;&nbsp;{{ waiterData.status }}</p>
       <p v-else>用户状态 &nbsp;&nbsp;暂无</p>
     </div>
     <div>
-      <el-button
-        type="text"
-        size="small"
-        @click="editUser(waiterData)"
-      >修改个人信息</el-button>
+      <el-button v-buttonThrotFromMx="()=>editUser(waiterData)" type="text" size="small">修改个人信息</el-button>
     </div>
     <!-- 模态框 -->
-    <el-dialog
-      :title="dialogTitle"
-      :visible.sync="dialogVisible"
-      @close="dialogClose"
-    >
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" @close="dialogClose">
       <!--  头像-->
 
       <el-upload
@@ -84,24 +51,15 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogClose">取 消</el-button>
         <!-- 提交表单后 -->
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button v-buttonThrotFromMx="submitForm" type="primary">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog
-      :title="dialogTitlee"
-      :visible.sync="Visible"
-      @close="dialogClose"
-    >
+    <el-dialog :title="dialogTitlee" :visible.sync="Visible" @close="dialogClose">
       <!-- 表单区域 -->
       <!-- 绑定的时我们最终要提交的表单对象model -->
       <!-- 表单验证的规则rule -->
       <!-- ref类似于id 最终通过ref找到这张表单 -->
-      <el-form
-        ref="waiter_detail"
-        :model="waiterData"
-        :rules="rules"
-        label-width="80px"
-      >
+      <el-form ref="waiter_detail" :model="waiterData" :rules="rules" label-width="80px">
         <!-- 用户名 -->
         <el-form-item label="用户名" prop="username">
           <el-input v-model="waiterData.username" />
@@ -134,7 +92,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogClose">取 消</el-button>
         <!-- 提交表单后 -->
-        <el-button type="primary" @click="submitForm1">确 定</el-button>
+        <el-button v-buttonThrotFromMx="submitForm1" type="primary">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -176,7 +134,7 @@ export default {
   methods: {
     async submitForm1() {
       this.$refs['waiter_detail'].validate(async(valid) => {
-        if (this.waiterData.birth != this.birth1) {
+        if (this.waiterData.birth !== this.birth1) {
           this.waiterData.birth = Date.parse(this.waiterData.birth)
         }
 
@@ -200,7 +158,7 @@ export default {
         userface: this.waiterData.userFace,
         id: this.waiterData.id
       })
-      if (res.status == 200) {
+      if (res.status === 200) {
         // 重新刷新页面数据
         this.$message({
           message: res.message,

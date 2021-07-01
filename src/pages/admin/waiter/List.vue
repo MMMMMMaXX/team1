@@ -8,6 +8,7 @@
       <!-- 用户名输入框 -->
       <el-input
         v-model="waiterName"
+        v-searchDebounceAndThrotFromMx="querywaiter"
         placeholder="请输入用户名"
         clearable
         style="width: 240px"
@@ -19,7 +20,7 @@
       </el-select>
 
       <!-- 查询按钮 -->
-      <el-button type="primary" @click="querywaiter">查询</el-button>
+      <el-button v-buttonThrotFromMx="querywaiter" type="primary">查询</el-button>
     </div>
     <!-- 表格内容展示区域 -->
     <div class="table_content">
@@ -42,21 +43,9 @@
         <!-- 操作 -->
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button
-              type="text"
-              size="small"
-              @click="editWaiter(scope.row)"
-            >编辑</el-button>
-            <el-button
-              type="text"
-              size="small"
-              @click="deleteWaiter(scope.row.id)"
-            >删除</el-button>
-            <el-button
-              type="text"
-              size="small"
-              @click="toDetail(scope.row.id)"
-            >详情</el-button>
+            <el-button type="text" size="small" @click="editWaiter(scope.row)">编辑</el-button>
+            <el-button type="text" size="small" @click="deleteWaiter(scope.row.id)">删除</el-button>
+            <el-button type="text" size="small" @click="toDetail(scope.row.id)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -74,21 +63,12 @@
       />
     </div>
     <!-- 模态框 -->
-    <el-dialog
-      :title="dialogTitle"
-      :visible.sync="dialogVisible"
-      @close="dialogClose"
-    >
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" @close="dialogClose">
       <!-- 表单区域 -->
       <!-- 绑定的时我们最终要提交的表单对象model -->
       <!-- 表单验证的规则rule -->
       <!-- ref类似于id 最终通过ref找到这张表单 -->
-      <el-form
-        ref="waiter_form"
-        :model="waiterForm"
-        :rules="rules"
-        label-width="80px"
-      >
+      <el-form ref="waiter_form" :model="waiterForm" :rules="rules" label-width="80px">
         <!-- 用户名 -->
         <el-form-item label="用户名" prop="username">
           <el-input v-model="waiterForm.username" />
@@ -177,7 +157,7 @@ export default {
     submitForm() {
       this.$refs['waiter_form'].validate(async(valid) => {
         // 发送表单验证请求，提交表单对象，给用户一个成功的提示，刷新页面  调用关闭模态框的方法
-        if (this.dialogTitle == '编辑员工信息') {
+        if (this.dialogTitle === '编辑员工信息') {
           const res = await post('/baseUser/saveOrUpdate', this.waiterForm)
           if (valid) {
             // 重新刷新页面数据
@@ -193,7 +173,7 @@ export default {
         } else {
           const res = await post('/baseUser/addUserWidthRole', this.waiterForm)
 
-          if (res.status == 200) {
+          if (res.status === 200) {
             // 重新刷新页面数据
             this.$message({
               message: res.message,
@@ -236,6 +216,7 @@ export default {
       this.dialogVisible = true
     },
     querywaiter() {
+      console.log('查询')
       // 定义一个参数
       const data = {
         // 产品名称
@@ -271,7 +252,7 @@ export default {
     },
     async deleteWaiter(id) {
       const res = await get('/baseUser/deleteById', { id })
-      if (res.status == 200) {
+      if (res.status === 200) {
         // 重新刷新页面数据
         this.$message({
           message: res.message,
