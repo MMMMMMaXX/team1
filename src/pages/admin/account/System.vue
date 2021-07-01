@@ -20,7 +20,7 @@
         <el-option label="未审核" value="未审核" />
       </el-select>
       <!-- 查询按钮 -->
-      <el-button type="primary" @click="querySystem">查询</el-button>
+      <el-button v-buttonThrotFromMx="querySystem" type="primary">查询</el-button>
     </div>
     <!-- 表格内容展示区 -->
     <div class="table_content">
@@ -33,9 +33,7 @@
         <!-- 交易时间 -->
         <el-table-column label="交易时间" align="center">
           <!-- 作用域插槽 -->
-          <template slot-scope="scope">
-            {{ scope.row.transferTime | fmtDate }}
-          </template>
+          <template slot-scope="scope">{{ scope.row.transferTime | fmtDate }}</template>
         </el-table-column>
         <!-- 交易类型 -->
         <el-table-column prop="type" label="交易类型" align="center" />
@@ -46,16 +44,12 @@
               v-show="scope.row.status == '正常'"
               style="width: 60px; height: 30px"
               type="success"
-            >
-              {{ scope.row.status }}
-            </el-tag>
+            >{{ scope.row.status }}</el-tag>
             <el-tag
               v-show="scope.row.status == '未审核'"
               style="width: 60px; height: 30px"
               type="danger"
-            >
-              {{ scope.row.status }}
-            </el-tag>
+            >{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
         <!-- 描述 -->
@@ -175,6 +169,7 @@ export default {
     },
     // 根据条件模糊查询系统信息
     querySystem() {
+      console.log('查询')
       // 定义参数
       const data = {
         // 系统类型

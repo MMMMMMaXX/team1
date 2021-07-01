@@ -20,11 +20,7 @@
         <el-option label="正常" value="正常" />
         <el-option label="未审核" value="未审核" />
       </el-select>
-      <el-select
-        v-model="customeBianhao"
-        clearable
-        placeholder="请选择顾客编号"
-      >
+      <el-select v-model="customeBianhao" clearable placeholder="请选择顾客编号">
         <el-option
           v-for="category in customes"
           :key="category.id"
@@ -33,7 +29,7 @@
         />
       </el-select>
       <!-- 查询按钮 -->
-      <el-button type="primary" @click="queryCustome">查询</el-button>
+      <el-button v-buttonThrotFromMx="queryCustome" type="primary">查询</el-button>
     </div>
     <!-- 表格内容展示区 -->
     <div class="table_content">
@@ -46,9 +42,7 @@
         <!-- 交易时间 -->
         <el-table-column label="交易时间" align="center">
           <!-- 作用域插槽 -->
-          <template slot-scope="scope">
-            {{ scope.row.transferTime | fmtDate }}
-          </template>
+          <template slot-scope="scope">{{ scope.row.transferTime | fmtDate }}</template>
         </el-table-column>
         <!-- 交易类型 -->
         <el-table-column prop="type" label="交易类型" align="center" />
@@ -59,16 +53,12 @@
               v-show="scope.row.status == '正常'"
               style="width: 60px; height: 30px"
               type="success"
-            >
-              {{ scope.row.status }}
-            </el-tag>
+            >{{ scope.row.status }}</el-tag>
             <el-tag
               v-show="scope.row.status == '未审核'"
               style="width: 60px; height: 30px"
               type="danger"
-            >
-              {{ scope.row.status }}
-            </el-tag>
+            >{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
         <!-- 描述 -->
@@ -195,6 +185,7 @@ export default {
     },
     // 根据条件模糊查询顾客信息
     queryCustome() {
+      console.log('查询')
       // 定义参数
       const data = {
         // 顾客类型
