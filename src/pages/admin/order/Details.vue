@@ -58,7 +58,6 @@
               moment(orderData.orderTime).format("YYYY-MM-DD HH:mm:ss")
             }}</span
           >
-
           <br />
           <br />
           订单状态：{{ orderData.status }}
