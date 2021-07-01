@@ -73,6 +73,7 @@ export default {
         username: this.username,
         password: this.password,
       };
+
       // 发送登录验证请求
       let res = await post_json("/user/login", params);
       // console.log(res);
