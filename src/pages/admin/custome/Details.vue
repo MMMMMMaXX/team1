@@ -124,7 +124,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogClose">取 消</el-button>
         <!-- 提交表单后，调用重置表单的方法 -->
-        <el-button type="primary" @click="submitForm">确定修改</el-button>
+        <el-button v-buttonThrotFromMx="submitForm" type="primary">确定修改</el-button>
       </span>
     </el-dialog>
     <!-- 模态框2 -->
@@ -144,7 +144,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogClose">取 消</el-button>
         <!-- 提交表单后，调用重置表单的方法 -->
-        <el-button type="primary" @click="submitForm2">确定修改</el-button>
+        <el-button v-buttonThrotFromMx="submitForm2" type="primary">确定修改</el-button>
       </span>
     </el-dialog>
   </div>

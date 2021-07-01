@@ -8,14 +8,21 @@
       <el-button type="primary" size="mini" @click="addUser">添加</el-button>
       <!--用户名称输入框 -->
 
-      <el-input v-model="userName" style="width: 240px" placeholder="请输入用户名" clearable size="mini" />
+      <el-input
+        v-model="userName"
+        v-searchDebounceAndThrotFromMx="queryUser"
+        style="width: 240px"
+        placeholder="请输入用户名"
+        clearable
+        size="mini"
+      />
       <!-- 用户状态下拉框 -->
       <el-select v-model="userStatus" clearable placeholder="请选择状态" size="mini">
         <el-option label="正常" value="正常" />
         <el-option label="禁用" value="禁用" />
       </el-select>
       <!-- 查询按钮 -->
-      <el-button type="primary" size="mini" @click="queryUser">查询</el-button>
+      <el-button v-buttonThrotFromMx="queryUser" type="primary" size="mini">查询</el-button>
     </div>
     <!-- 表格内容展示区 -->
     <div class="table_content">
@@ -195,6 +202,7 @@ export default {
   methods: {
     // 模糊查询，根据条件查询用户的信息
     queryUser() {
+      console.log('查询')
       // 定义参数
       const data = {
         // 用户名
