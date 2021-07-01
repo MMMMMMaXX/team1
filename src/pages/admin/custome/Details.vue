@@ -6,8 +6,14 @@
     <div class="header">
       <template>
         <div class="demo-type">
-          <el-avatar :size="80" :src="this.userDetail.userFace" @error="errorHandler">
-            <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png">
+          <el-avatar
+            :size="80"
+            :src="this.userDetail.userFace"
+            @error="errorHandler"
+          >
+            <img
+              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
+            >
           </el-avatar>
         </div>
       </template>
@@ -35,11 +41,11 @@
       <div class="foot_1">
         <span>用户性别：</span>
 
-        <p v-if="this.userDetail.gender=='female'">
+        <p v-if="this.userDetail.gender == 'female'">
           女
           <span class="span_nv">♀</span>
         </p>
-        <p v-else-if="this.userDetail.gender=='male'">
+        <p v-else-if="this.userDetail.gender == 'male'">
           男
           <span class="span_nan">♂</span>
         </p>
@@ -53,36 +59,53 @@
       <!-- 用户生日： -->
       <div class="foot_1">
         <span>用户生日：</span>
-        <p v-if="this.userDetail.birth!=null">{{ this.userDetail.birth | fmtDate }}</p>
+        <p v-if="this.userDetail.birth != null">
+          {{ this.userDetail.birth | fmtDate1 }}
+        </p>
         <p v-else>暂无</p>
       </div>
       <!-- 注册时间 -->
       <div class="foot_1">
         <span>注册时间:</span>
-        {{ this.userDetail.registerTime | fmtDate }}
+        {{ this.userDetail.registerTime | fmtDate1 }}
       </div>
       <!-- 邮箱 -->
       <div class="foot_1">
         <span>邮箱:</span>
-        <p v-if="this.userDetail.email!=''">{{ this.userDetail.email }}</p>
+        <p v-if="this.userDetail.email != ''">{{ this.userDetail.email }}</p>
         <p v-else>暂无</p>
       </div>
       <!-- 注册状态 -->
       <div class="foot_1">
         <span>注册状态:</span>
-        <el-tag v-if="this.userDetail.status=='正常'" type="success">正常</el-tag>
-        <el-tag v-else-if="this.userDetail.status=='禁用'" type="danger">禁用</el-tag>
+        <el-tag
+          v-if="this.userDetail.status == '正常'"
+          type="success"
+        >正常</el-tag>
+        <el-tag
+          v-else-if="this.userDetail.status == '禁用'"
+          type="danger"
+        >禁用</el-tag>
         <el-tag v-else type="info">暂无</el-tag>
       </div>
       <span class="span_1" @click="editUser">修改个人信息</span>
     </div>
     <!-- 模态框1 -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" @close="dialogClose">
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      @close="dialogClose"
+    >
       <!-- 表单区域 -->
       <!-- model 表单对象， 最终我们要提交的那个表单对象 -->
       <!-- :rules 表单验证的规则 -->
       <!-- ref 类比与 id 最终通过ref 找到这张表单 -->
-      <el-form ref="User_form" :model="UserForm" :rules="rules" label-width="80px">
+      <el-form
+        ref="User_form"
+        :model="UserForm"
+        :rules="rules"
+        label-width="80px"
+      >
         <!-- 登录用户 -->
         <el-form-item label="登录用户" prop="username">
           <el-input v-model="UserForm.username" />
@@ -124,11 +147,15 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogClose">取 消</el-button>
         <!-- 提交表单后，调用重置表单的方法 -->
-        <el-button v-buttonThrotFromMx="submitForm" type="primary">确定修改</el-button>
+        <el-button type="primary" @click="submitForm">确定修改</el-button>
       </span>
     </el-dialog>
     <!-- 模态框2 -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible2" @close="dialogClose2">
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible2"
+      @close="dialogClose2"
+    >
       <!-- 头像 -->
       <el-upload
         :action="uploadFileURL"
@@ -144,7 +171,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogClose">取 消</el-button>
         <!-- 提交表单后，调用重置表单的方法 -->
-        <el-button v-buttonThrotFromMx="submitForm2" type="primary">确定修改</el-button>
+        <el-button type="primary" @click="submitForm2">确定修改</el-button>
       </span>
     </el-dialog>
   </div>
@@ -159,6 +186,7 @@ import { showFileURL, uploadFileURL } from '@/utils/config'
 export default {
   data() {
     return {
+      birth1: '',
       // 图片预览的路径
       imageUrl: '',
       // 上传的服务器地址
@@ -281,9 +309,12 @@ export default {
     submitForm() {
       this.$refs['User_form'].validate(async(valid) => {
         if (valid) {
+          if (this.birth1 != this.UserForm.birth) {
+            this.UserForm.birth = Date.parse(this.UserForm.birth)
+          }
           // 发送表单验证请求  提交表单对象
           // 将时间转为时间戳格式
-          this.UserForm.birth = Date.parse(this.UserForm.birth)
+
           const res = await post('/baseUser/saveOrUpdate ', this.UserForm)
           if (res.status === 200) {
             // 给用户一个成功地提示
@@ -352,7 +383,7 @@ export default {
 
       // 将data中的用户数组 进行赋值
       this.userDetail = res.data
-
+      this.birth1 = res.data.birth
       console.log(res, '1234')
     }
   }

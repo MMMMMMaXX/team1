@@ -63,7 +63,9 @@ export function toThousandFilter(num) {
 export function fmtDate(date) {
   return date ? moment(date).format('YYYY-MM-DD HH:mm:ss') : ''
 }
-
+export function fmtDate1(date) {
+  return date ? moment(date).format('YYYY-MM-DD') : ''
+}
 /**
  * Upper case first char
  * @param {String} string
