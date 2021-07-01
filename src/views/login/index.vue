@@ -16,7 +16,16 @@
           autocomplete="on"
           label-position="left"
         >
-          <div style="text-align:center;height:60px;line-height:60px;font-weight:bold">用户名密码登录</div>
+          <div
+            style="
+              text-align: center;
+              height: 60px;
+              line-height: 60px;
+              font-weight: bold;
+            "
+          >
+            用户名密码登录
+          </div>
           <el-form-item prop="username">
             <el-input
               v-model="loginForm.username"
@@ -25,7 +34,12 @@
               ref="username"
             />
           </el-form-item>
-          <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+          <el-tooltip
+            v-model="capsTooltip"
+            content="Caps lock is On"
+            placement="right"
+            manual
+          >
             <el-form-item prop="password">
               <el-input
                 :key="passwordType"
@@ -37,13 +51,17 @@
             </el-form-item>
           </el-tooltip>
           <div>
-            <el-button :loading="loading" style="width:100%;" @click.native.prevent="handleLogin">登录</el-button>
+            <el-button
+              :loading="loading"
+              style="width: 100%"
+              @click.native.prevent="handleLogin"
+              >登录</el-button
+            >
           </div>
         </el-form>
         <!-- 表单 -->
       </div>
     </div>
-    <div class="footer">昆山杰普软件科技有限公司</div>
   </div>
 </template>
 
