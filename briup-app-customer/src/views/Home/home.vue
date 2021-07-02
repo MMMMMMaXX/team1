@@ -10,10 +10,11 @@
       <div class="menu">
         <van-grid :column-num="3" :gutter="10">
           <van-grid-item
-            v-for="category in categroyData"
+            v-for="(category, index) in categroyData"
             :key="category.id"
             :icon="category.icon"
             :text="category.name"
+            @click="toProduct(category.id, index)"
           />
         </van-grid>
       </div>
@@ -45,6 +46,7 @@
 //引入axios
 import { get } from "@/http/axios";
 import { mapActions, mapState } from "vuex";
+import data from "../../../../briup-web/src/views/pdf/content";
 export default {
   data() {
     return {
@@ -71,6 +73,17 @@ export default {
         pageSize: 8,
       };
       this.getAllProductData(data);
+    },
+    //跳转到产品页面
+    toProduct(id, key) {
+      //使用编程式导航
+      this.$router.push({
+        path: "product",
+        query: {
+          id: id,
+          key: key,
+        },
+      });
     },
     //获取所有轮播图的数据
     async getAllSwipeData() {

@@ -52,6 +52,10 @@ const routes = [
       {
         path: 'mine',
         component: () => import('@/views/Mine/mine.vue')
+      },
+      {
+        path: 'product',
+        component: () => import('@/views/Product/product.vue')
       }
     ]
   },

@@ -7,6 +7,7 @@ import user from './user/user'
 
 import category from './category/category'
 import product from "./product/product"
+import shopcart from "./shopcart/shopcart"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -24,5 +25,6 @@ export default new Vuex.Store({
 
     category,
     product,
+    shopcart,
   }
 })
